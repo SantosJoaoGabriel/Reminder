@@ -14,5 +14,6 @@ class reminder extends Model
         'data_lembrete',
         'hora_lembrete',
         'user_id', 
+        'previsao_clima',
     ];
 }

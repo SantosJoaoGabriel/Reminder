@@ -10,45 +10,32 @@
                     <div class="overflow-x-auto">
                         <table class="w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50 dark:bg-gray-700">
-                            <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    Titulo
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    Descrição
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    Data
-                                </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                                    Hora
-                                </th>
-
-                                <th scope="col">Ações</th>   
-                                
-                            </tr>
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Título</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descrição</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Hora</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Clima</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
+                                </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach ($reminders as $reminder)
-
                                 <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->titulo }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->descricao }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->data_lembrete }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->hora_lembrete }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ $reminder->titulo }}
+                                        <span class="text-sm text-gray-600">{{ $reminder->previsao_clima ?? 'N/A' }}</span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ $reminder->descricao }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ $reminder->data_lembrete }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        {{ $reminder->hora_lembrete }}
                                         <a href="{{ route('reminders.edit', $reminder->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
                                         <form action="{{ route('reminders.destroy', $reminder->id) }}" method="POST" class="inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-900">Excluir</button>
-           x                             </form>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

@@ -17,7 +17,7 @@
                     </div>
                 @endif
 
-                <form action="{{route('reminders.update', $reminder->id)}}" method="POST">
+                <form action="{{ route('reminders.update', $reminder->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-4">
@@ -26,33 +26,39 @@
                         </label>
                         <input type="text" name="titulo" id="titulo" class="form-input mt-1 block w-full" value="{{ $reminder->titulo }}" required>
                     </div>
-
                     <div class="mb-4">
                         <label for="descricao" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Descrição:
                         </label>
                         <input type="text" name="descricao" id="descricao" class="form-input mt-1 block w-full" value="{{ $reminder->descricao }}" required>
                     </div>
-
                     <div class="mb-4">
                         <label for="data_lembrete" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Data:
                         </label>
                         <input type="date" name="data_lembrete" id="data_lembrete" class="form-input mt-1 block w-full" value="{{ $reminder->data_lembrete }}" required>
                     </div>
-
                     <div class="mb-4">
                         <label for="hora_lembrete" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Hora:
                         </label>
                         <input type="time" name="hora_lembrete" id="hora_lembrete" class="form-input mt-1 block w-full" value="{{ $reminder->hora_lembrete }}" required>
                     </div>
-
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Atualizar
                     </button>
-
                 </form>
+
+                @if($reminder->previsao_clima)
+                    <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900 rounded-lg">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Previsão do Clima</h3>
+                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                            Para {{ $reminder->data_lembrete }} em Guarapuava: 
+                            <span class="font-semibold">{{ $reminder->previsao_clima }}</span>
+                        </p>
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>
