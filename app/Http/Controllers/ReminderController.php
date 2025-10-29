@@ -75,6 +75,7 @@ class ReminderController extends Controller
         'dt' => $data
     ]);
 
+
     $previsao = $response['forecast']['forecastday'][0]['day']['condition']['text'] ?? 'Não encontrado';
     $validated['previsao_clima'] = $previsao;
 

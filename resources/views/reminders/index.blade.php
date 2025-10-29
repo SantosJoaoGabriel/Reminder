@@ -1,52 +1,57 @@
 @extends('layouts.app')
 
 @section('slot')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white dark:bg-gray-800">
-                    <h1 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Lista de Lembretes</h1>
-                    <a href="{{ route('reminders.create') }}" class="text-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">Novo Lembrete</a>
-                    <div class="overflow-x-auto">
-                        <table class="w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Título</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Descrição</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Data</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Hora</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Clima</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach ($reminders as $reminder)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->titulo }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->descricao }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->data_lembrete }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $reminder->hora_lembrete }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-sm text-gray-600">{{ $reminder->previsao_clima ?? 'N/A' }}</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <a href="{{ route('reminders.edit', $reminder->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Editar</a>
-                                        <form action="{{ route('reminders.destroy', $reminder->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-900">Excluir</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <div class="mt-4">
-                            {{ $reminders->links() }}
-                        </div>
-                    </div>
+<div class="min-h-screen flex items-center justify-center bg-[#181928]">
+    <div class="grid gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        @foreach ($reminders as $reminder)
+
+            @php
+                $clima = strtolower($reminder->previsao_clima ?? '');
+                $glow = 'shadow-[0_0_40px_10px_rgba(59,130,246,0.5)]'; // azul como padrão
+                if(str_contains($clima, 'rain')) $glow = 'shadow-[0_0_40px_10px_rgba(59,130,246,0.6)]';
+                elseif(str_contains($clima, 'cloud')) $glow = 'shadow-[0_0_40px_10px_rgba(255,255,255,0.5)]';
+                elseif(str_contains($clima, 'sun')) $glow = 'shadow-[0_0_40px_10px_rgba(255,204,0,0.5)]';
+                elseif(str_contains($clima, 'storm')) $glow = 'shadow-[0_0_40px_10px_rgba(124,58,237,0.7)]';
+                elseif(str_contains($clima, 'snow')) $glow = 'shadow-[0_0_40px_10px_rgba(173,216,230,0.8)]';
+            @endphp
+            <div class="relative w-[340px] h-[220px] rounded-2xl border-2 border-transparent
+                bg-[#22232d] flex flex-col items-center justify-center
+                {{ $glow }} shadow-2xl overflow-hidden
+                hover:scale-105 transition-transform duration-300
+            ">
+                <h2 class="text-2xl font-bold text-white mb-2">{{ $reminder->titulo }}</h2>
+                <p class="text-gray-300 mb-2 text-base">{{ $reminder->descricao }}</p>
+                <div class="flex items-center gap-2 text-blue-200 font-bold mb-2">
+                    📅 {{ \Carbon\Carbon::parse($reminder->data_lembrete)->format('d/m/Y') }}
+                </div>
+                <div class="flex items-center gap-2 text-lg mb-2">
+                    @if(str_contains($clima, 'rain'))
+                        🌧️
+                    @elseif(str_contains($clima, 'cloud'))
+                        ☁️
+                    @elseif(str_contains($clima, 'sun'))
+                        ☀️
+                    @elseif(str_contains($clima, 'storm'))
+                        ⛈️
+                    @elseif(str_contains($clima, 'snow'))
+                        ❄️
+                    @elseif(str_contains($clima, 'hot'))
+                        🌡️
+                    @else
+                        🌈
+                    @endif
+                    <span class="text-blue-100 font-bold">{{ $reminder->previsao_clima ?? 'N/A' }}</span>
+                </div>
+                <div class="flex gap-2 mt-4">
+                    <a href="{{ route('reminders.edit', $reminder->id) }}" class="px-3 py-2 bg-blue-700 text-white rounded-lg font-semibold text-sm shadow hover:bg-blue-500">Editar</a>
+                    <form action="{{ route('reminders.destroy', $reminder->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-3 py-2 bg-red-600 text-white rounded-lg font-semibold text-sm shadow hover:bg-red-400">Excluir</button>
+                    </form>
                 </div>
             </div>
-        </div>
+        @endforeach
     </div>
+</div>
 @endsection

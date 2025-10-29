@@ -14,18 +14,38 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased bg-[#181928]">
+        <header class="w-full bg-[#181928] py-4 px-6 flex items-center justify-between shadow-lg border-b-2 border-blue-700">
+    <!-- Imagem à esquerda -->
+            <div>
+                <img src="{{ asset('https://th.bing.com/th/id/OIP.Lddo6-yQCJntaifsBG1tLgHaHa?w=184&h=185&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3') }}" alt="Logo" class="h-10 w-10 rounded-xl shadow-lg" />
+            </div>
+            <!-- Nome centralizado -->
+            <div class="flex-1 text-center">
+                <span class="text-3xl font-extrabold text-blue-300 tracking-wide drop-shadow">Weather Reminder</span>
+            </div>
+            <!-- Botão de logout à direita -->
+            <div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl shadow transition">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </header>
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             <livewire:layout.navigation />
-
+            
             <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+                @if (isset($header))
+                    <header class="bg-[#181928] shadow-none">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endif
 
             <!-- Page Content -->
             <main>
