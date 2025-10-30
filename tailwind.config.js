@@ -14,6 +14,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            
+             colors: {
+        midnight: '#181928',   
+        slatecard: '#22232d', 
+            }, 
+            
         },
     },
 

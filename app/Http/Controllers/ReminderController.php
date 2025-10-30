@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class ReminderController extends Controller
 {
     public function index() {
-        $reminders = Reminder::where('user_id', auth()->id())->paginate(10);
+        $reminders = Reminder::where('user_id', auth()->id())->paginate(6);
         return view('reminders.index', compact('reminders'));
     }
 
