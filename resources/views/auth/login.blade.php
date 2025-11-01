@@ -1,4 +1,9 @@
 <x-guest-layout>
+
+    <div class="flex flex-col items-center mb-6 mt-8">
+        <img src="{{ asset('https://th.bing.com/th/id/OIP.Lddo6-yQCJntaifsBG1tLgHaHa?w=184&h=185&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3') }}" alt="Logo" class="h-20 w-20 mb-2 rounded-full shadow">
+        <span class="text-2xl font-bold text-gray-700 dark:text-gray-100">Weather Reminder</span>
+    </div>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -32,16 +37,23 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <div class="flex items-center justify-between mt-4 gap-4">
+            <a href="{{ route('register') }}"
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg transition-all shadow text-sm">
+                Registrar-se
+            </a>
+            <div class="flex items-center gap-3">
+                @if (Route::has('password.request'))
+                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                    href="{{ route('password.request') }}">
+                        {{ __('Forgot your password?') }}
+                    </a>
+                @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+                <x-primary-button>
+                    {{ __('Log in') }}
+                </x-primary-button>
+            </div>
         </div>
     </form>
 </x-guest-layout>

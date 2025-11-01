@@ -22,7 +22,6 @@ class ReminderController extends Controller
             'titulo' => 'required|string|max:255',
             'descricao' => 'required|string',
             'data_lembrete' => 'required|date',
-            'hora_lembrete' => 'required',
         ]);
 
         $cidade = 'Guarapuava';
@@ -61,7 +60,6 @@ class ReminderController extends Controller
         'titulo' => 'required|string|max:255',
         'descricao' => 'required|string',
         'data_lembrete' => 'required|date',
-        'hora_lembrete' => 'required',
     ]);
 
     // Consulta nova previsão de clima

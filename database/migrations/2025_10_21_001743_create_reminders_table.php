@@ -15,7 +15,6 @@ Schema::create('reminders', function (Blueprint $table) {
     $table->string('titulo');
     $table->string('descricao');
     $table->date('data_lembrete');
-    $table->time('hora_lembrete');
     $table->unsignedBigInteger('user_id'); 
     $table->timestamps();
 

@@ -14,7 +14,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-[#181928]">
+<body class="font-sans antialiased bg-[#181928] overflow-hidden"> <!-- overflow-hidden -->
 
     <!-- HEADER  -->
     <header class="w-full bg-[#181928] py-4 px-6 flex items-center justify-between shadow-lg border-b-2 border-blue-700">
@@ -35,7 +35,7 @@
         </div>
     </header>
     
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 pt-20 relative">
+    <div class="h-screen bg-gray-100 dark:bg-gray-900 flex flex-col pt-20 relative">
         <livewire:layout.navigation />
         @if (isset($header))
             <header class="bg-[#181928] shadow-none">
@@ -44,10 +44,9 @@
                 </div>
             </header>
         @endif
-
-        <main>
+        
+        <main class="flex-1 flex flex-col">
             @yield('slot')
         </main>
-    </div>
 </body>
 </html>

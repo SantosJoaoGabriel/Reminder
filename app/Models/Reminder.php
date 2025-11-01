@@ -12,7 +12,6 @@ class reminder extends Model
         'titulo',
         'descricao',
         'data_lembrete',
-        'hora_lembrete',
         'user_id', 
         'previsao_clima',
     ];

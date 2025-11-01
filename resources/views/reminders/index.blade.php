@@ -2,7 +2,7 @@
 
 @section('slot')
 <!-- Centraliza cards vertical/horizontalmente na tela -->
-<div class="min-h-screen flex items-center justify-center w-full">
+ <div class="min-h-screen flex items-center justify-center w-full">
     <div class="grid gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         @foreach ($reminders as $reminder)
             @php
@@ -53,11 +53,13 @@
             </div>
         @endforeach
     </div>
+</div> 
+<div
+    style="position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 9999; padding: 0.3rem 0.7rem; border-radius: 0.7rem; box-shadow: 0 2px 10px rgba(37,99,235,0.07); background: transparent;"
+>
+    {{ $reminders->links('pagination::tailwind') }}
 </div>
-    <div class="flex justify-center mt-8">
-        {{ $reminders->links('pagination::tailwind') }}
-    </div>
-<!-- Botão formatado em CSS puro-->
+<!-- maldito botão formatado em CSS puro-->
 <a href="{{ route('reminders.create') }}"
    style="position: fixed; bottom: 2rem; right: 2rem; z-index: 9999; background: #2563eb; color: #fff; font-weight: bold; padding: 1rem 1.5rem; border-radius: 9999px; box-shadow: 0 4px 12px rgba(37,99,235,0.3); display: flex; align-items: center; gap: 0.5rem; cursor: pointer; text-decoration: none; font-size: 1rem;"
    title="Novo Lembrete">
