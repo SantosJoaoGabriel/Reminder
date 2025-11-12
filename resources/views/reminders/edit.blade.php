@@ -30,7 +30,7 @@
                         <label for="descricao" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Descrição:
                         </label>
-                        <input type="text" name="descricao" id="descricao" class="form-input mt-1 block w-full" value="{{ $reminder->descricao }}" required>
+                        <input type="text" name="descricao" id="descricao" class="form-input mt-1 block w-full"  value="{{ $reminder->descricao ?? old('descricao') }}" required>
                     </div>
                     <div class="mb-4">
                         <label for="data_lembrete" class="block text-sm font-medium text-gray-700 dark:text-gray-300">

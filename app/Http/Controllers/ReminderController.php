@@ -19,8 +19,8 @@ class ReminderController extends Controller
 
     public function store(Request $request) {
         $validated = $request->validate([
-            'titulo' => 'required|string|max:255',
-            'descricao' => 'required|string',
+            'titulo' => 'required|string|max:20',
+            'descricao' => 'required|string|max40',
             'data_lembrete' => 'required|date',
         ]);
 
@@ -31,7 +31,8 @@ class ReminderController extends Controller
         $response = Http::get("https://api.weatherapi.com/v1/forecast.json", [
             'key' => $apiKey,
             'q' => $cidade,
-            'dt' => $data
+            'dt' => $data,
+            'lang' => 'pt'
         ]);
 
         $previsao = $response['forecast']['forecastday'][0]['day']['condition']['text'] ?? 'Não encontrado';
@@ -57,8 +58,8 @@ class ReminderController extends Controller
     }
 
     $validated = $request->validate([
-        'titulo' => 'required|string|max:255',
-        'descricao' => 'required|string',
+        'titulo' => 'required|string|max:20',
+        'descricao' => 'required|string|max:40',
         'data_lembrete' => 'required|date',
     ]);
 
@@ -70,7 +71,8 @@ class ReminderController extends Controller
     $response = Http::get("https://api.weatherapi.com/v1/forecast.json", [
         'key' => $apiKey,
         'q' => $cidade,
-        'dt' => $data
+        'dt' => $data,
+        'lang' => 'pt'
     ]);
 
 
