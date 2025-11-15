@@ -4,15 +4,15 @@
 <!-- Centraliza cards vertical/horizontalmente na tela -->
  <div class="min-h-screen flex items-center justify-center w-full">
     <div class="grid gap-16 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        @foreach ($reminders as $reminder)
+        @foreach($reminders as $reminder)
             @php
                 $clima = strtolower($reminder->previsao_clima ?? '');
                 $glow = 'shadow-[0_0_40px_10px_rgba(59,130,246,0.5)]';
-                if(str_contains($clima, 'cloud')) $glow = 'shadow-[0_0_40px_10px_rgba(255,255,255,0.5)]';
-                elseif(str_contains($clima, 'rain')) $glow = 'shadow-[0_0_40px_10px_rgba(59,130,246,0.6)]';
-                elseif(str_contains($clima, 'sun')) $glow = 'shadow-[0_0_40px_10px_rgba(255,204,0,0.5)]';
-                elseif(str_contains($clima, 'storm')) $glow = 'shadow-[0_0_40px_10px_rgba(124,58,237,0.7)]';
-                elseif(str_contains($clima, 'snow')) $glow = 'shadow-[0_0_40px_10px_rgba(173,216,230,0.8)]';
+                if(str_contains($clima, 'nublado')) $glow = 'shadow-[0_0_40px_10px_rgba(255,255,255,0.5)]';
+                elseif(str_contains($clima, 'chuva')) $glow = 'shadow-[0_0_40px_10px_rgba(59,130,246,0.6)]';
+                elseif(str_contains($clima, 'sol')) $glow = 'shadow-[0_0_40px_10px_rgba(255,204,0,0.5)]';
+                elseif(str_contains($clima, 'tempestade')) $glow = 'shadow-[0_0_40px_10px_rgba(124,58,237,0.7)]';
+                elseif(str_contains($clima, 'neve')) $glow = 'shadow-[0_0_40px_10px_rgba(173,216,230,0.8)]';
             @endphp
             <div class="relative w-[340px] h-[220px] rounded-2xl border-2 border-transparent
                 bg-gray-800 flex flex-col items-center justify-center
@@ -25,17 +25,17 @@
                     📅 {{ \Carbon\Carbon::parse($reminder->data_lembrete)->format('d/m/Y') }}
                 </div>
                 <div class="flex items-center gap-2 text-lg mb-2">
-                    @if(str_contains($clima, 'cloud'))
+                    @if(str_contains($clima, 'nublado'))
                         ☁️
-                    @elseif(str_contains($clima, 'rain'))
+                    @elseif(str_contains($clima, 'chuva'))
                         🌧️
-                    @elseif(str_contains($clima, 'sun'))
+                    @elseif(str_contains($clima, 'sol'))
                         ☀️
-                    @elseif(str_contains($clima, 'storm'))
+                    @elseif(str_contains($clima, 'tempestade'))
                         ⛈️
-                    @elseif(str_contains($clima, 'snow'))
+                    @elseif(str_contains($clima, 'neve'))
                         ❄️
-                    @elseif(str_contains($clima, 'hot'))
+                    @elseif(str_contains($clima, 'quente'))
                         🌡️
                     @else
                         🌈
@@ -53,7 +53,7 @@
             </div>
         @endforeach
     </div>
-</div> 
+</div>
 <div
     style="position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 9999; padding: 0.3rem 0.7rem; border-radius: 0.7rem; box-shadow: 0 2px 10px rgba(37,99,235,0.07); background: transparent;"
 >

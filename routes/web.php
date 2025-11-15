@@ -3,14 +3,18 @@
 use App\Http\Controllers\ReminderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [ReminderController::class, 'index'])->middleware('auth')->name('home');
+// Home da aplicação aponta para a lista de lembretes
+Route::get('/', [ReminderController::class, 'index'])
+    ->middleware('auth')
+    ->name('home');
 
-Route::get('/reminders', function () {
-    return view('reminders');
-})->middleware(['auth', 'verified'])->name('reminders');
+    Route::get('/', [ReminderController::class, 'create'])
+    ->middleware('auth')
+    ->name('home');
 
+// Todas as rotas de lembretes protegidas para usuários autenticados
 Route::middleware('auth')->group(function () {
-    Route::resource('reminders', ReminderController::class); // sem barra no começo!
+    Route::resource('reminders', ReminderController::class);
 });
 
 require __DIR__.'/auth.php';

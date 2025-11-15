@@ -2,94 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reminder;
+use App\Http\Requests\CreateReminderRequest;
+use App\Http\Requests\UpdateReminderRequest;
+use App\Http\Resources\ReminderResource;
+use App\Http\Services\ReminderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class ReminderController extends Controller
 {
-    public function index() {
-        $reminders = Reminder::where('user_id', auth()->id())->paginate(6);
+    private ReminderService $reminderService;
+
+    public function __construct(ReminderService $reminderService)
+    {
+        $this->reminderService = $reminderService;
+    }
+
+    // Exibe todos os lembretes
+    public function index(Request $request)
+    {
+        $reminders = $this->reminderService->index($request->all());
         return view('reminders.index', compact('reminders'));
     }
 
-    public function create() {
+    // Exibe o formulário de cadastro
+    public function create()
+    {
         return view('reminders.create');
     }
 
-    public function store(Request $request) {
-        $validated = $request->validate([
-            'titulo' => 'required|string|max:20',
-            'descricao' => 'required|string|max40',
-            'data_lembrete' => 'required|date',
-        ]);
-
-        $cidade = 'Guarapuava';
-        $data = $validated['data_lembrete'];
-        $apiKey = env('WEATHER_API_KEY');   
-
-        $response = Http::get("https://api.weatherapi.com/v1/forecast.json", [
-            'key' => $apiKey,
-            'q' => $cidade,
-            'dt' => $data,
-            'lang' => 'pt'
-        ]);
-
-        $previsao = $response['forecast']['forecastday'][0]['day']['condition']['text'] ?? 'Não encontrado';
-
-        $validated['previsao_clima'] = $previsao;
-        $validated['user_id'] = auth()->id();
-
-        Reminder::create($validated);
-
-        return redirect()->route('reminders.index')->with('success', 'Lembrete criado com previsão do clima!');
+    // Salva o novo lembrete
+    public function store(CreateReminderRequest $request)
+    {
+        $reminder = $this->reminderService->store($request->validated());
+        return redirect()->route('reminders.index');
     }
 
-    public function edit($id) {
-        $reminder = Reminder::where('id', $id)
-            ->where('user_id', auth()->id())
-            ->firstOrFail();
+    // Exibe detalhes (API)
+    public function show(string $id)
+    {
+        $reminder = $this->reminderService->show($id);
+        return new ReminderResource($reminder);
+    }
+
+    // Exibe o formulário de edição
+    public function edit(string $id)
+    {
+        $reminder = $this->reminderService->show($id);
         return view('reminders.edit', compact('reminder'));
     }
 
-    public function update(Request $request, Reminder $reminder) {
-    if ($reminder->user_id !== auth()->id()) {
-        abort(403);
+    // Atualiza um lembrete
+    public function update(UpdateReminderRequest $request, string $id)
+    {
+        $this->reminderService->update($request->validated(), $id);
+        return redirect()->route('reminders.index');
     }
 
-    $validated = $request->validate([
-        'titulo' => 'required|string|max:20',
-        'descricao' => 'required|string|max:40',
-        'data_lembrete' => 'required|date',
-    ]);
-
-    // Consulta nova previsão de clima
-    $cidade = 'Guarapuava';
-    $data = $validated['data_lembrete'];
-    $apiKey = env('WEATHER_API_KEY');
-
-    $response = Http::get("https://api.weatherapi.com/v1/forecast.json", [
-        'key' => $apiKey,
-        'q' => $cidade,
-        'dt' => $data,
-        'lang' => 'pt'
-    ]);
-
-
-    $previsao = $response['forecast']['forecastday'][0]['day']['condition']['text'] ?? 'Não encontrado';
-    $validated['previsao_clima'] = $previsao;
-
-    $reminder->update($validated);
-
-    return redirect()->route('reminders.index')
-        ->with('success', 'Lembrete atualizado com nova previsão do clima!');
-}   
-
-    public function destroy(Reminder $reminder) {
-        if ($reminder->user_id !== auth()->id()) {
-            abort(403);
-        }
-        $reminder->delete();
+    // Exclui um lembrete
+    public function destroy(string $id)
+    {
+        $this->reminderService->destroy($id);
         return redirect()->route('reminders.index');
     }
 }

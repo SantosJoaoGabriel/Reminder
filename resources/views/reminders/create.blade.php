@@ -28,7 +28,7 @@
                             </label>
                             <input type="date" name="data_lembrete" id="data_lembrete" class="form-input mt-1 block w-full" required>
                         </div>
-                        <button type="submit" 
+                        <button type="submit"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Adicionar
                         </button>
