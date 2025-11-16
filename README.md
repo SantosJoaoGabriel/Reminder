@@ -50,4 +50,4 @@ Em https://www.weatherapi.com faça registro e gera uma chave para API.
 Copie .env.example para .env e ajuste variáveis (DB, API de clima, etc).
 
 Exemplo para API:
-WEATHER_API_KEY=SuaChaveApiWeatherAPI
+WEATHER_API_KEY=SuaChaveApi
