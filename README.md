@@ -7,7 +7,7 @@ Sistema web para gerenciamento de lembretes, desenvolvido usando Laravel 12. Per
 
 - PHP 8.2
 
-- MySQL (ou outro banco relacional)
+- MySQL (banco de dados)
 
 - Blade (templates)
 
@@ -17,19 +17,17 @@ Sistema web para gerenciamento de lembretes, desenvolvido usando Laravel 12. Per
 
 - Composer (gerenciador de dependências)
 
-- NPM (gerenciador de pacotes front-end, se usar Mix/Vite)
+- NPM (gerenciador de pacotes front-end)
 
 
 ## Passos para Instalação e Execução
 Clonar o repositório
 
-```bash
+```
 git clone https://github.com/SantosJoaoGabriel/Reminder.git
 ```
 
-
-
-```bash
+```
 composer install
 npm install
 ```
@@ -37,13 +35,11 @@ npm install
 Gerar chave da aplicação
 
 ```
-bash
 php artisan key:generate
 Executar migrações
 ```
 
 ```
-bash
 php artisan migrate
 ```
 
